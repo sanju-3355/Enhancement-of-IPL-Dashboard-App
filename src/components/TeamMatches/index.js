@@ -1,6 +1,8 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import './index.css'
+
+import PieChart from '../PieChart'
 import LatestMatch from '../LatestMatch'
 import MatchCard from '../MatchCard'
 
@@ -9,6 +11,11 @@ class TeamMatches extends Component {
 
   componentDidMount() {
     this.getMatchesDetails()
+  }
+
+  onClickBack = () => {
+    const {history} = this.props
+    history.push('/')
   }
 
   getFormatingData = value => ({
@@ -45,6 +52,22 @@ class TeamMatches extends Component {
     this.setState({teamMatchesData: formatingData, isLoading: false})
   }
 
+  getNoOfMatches = value => {
+    const {teamMatchesData} = this.state
+    const {latestMatch, recentMatches} = teamMatchesData
+    const currentMatch = value === latestMatch.matchStatus ? 1 : 0
+    const result =
+      recentMatches.filter(each => each.matchStatus === value).length +
+      currentMatch
+    return result
+  }
+
+  generatePieChartData = () => [
+    {name: 'Won', value: this.getNoOfMatches('Won')},
+    {name: 'Lost', value: this.getNoOfMatches('Lost')},
+    {name: 'Drawn', value: this.getNoOfMatches('Drawn')},
+  ]
+
   renderMatchCardDetails = () => {
     const {teamMatchesData} = this.state
     const {recentMatches} = teamMatchesData
@@ -64,7 +87,12 @@ class TeamMatches extends Component {
       <div className="matches-data-container">
         <img src={teamBannerUrl} alt="team banner" className="banner-img" />
         <LatestMatch latestDetails={latestMatch} />
+        <h1 className="heading">Team Statistics</h1>
+        <PieChart data={this.generatePieChartData()} />
         {this.renderMatchCardDetails()}
+        <button className="back-btn" type="button" onClick={this.onClickBack}>
+          Back
+        </button>
       </div>
     )
   }
