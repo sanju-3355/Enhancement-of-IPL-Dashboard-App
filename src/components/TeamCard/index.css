@@ -1,0 +1,40 @@
+.item-link {
+  text-decoration: none;
+  margin: 10px;
+}
+.card-container {
+  background-color: #1e293b;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  width: 280px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 20px;
+}
+@media (min-width: 768px) {
+  .card-container {
+    width: 350px;
+    height: 180px;
+  }
+}
+.name {
+  font-family: 'Bree Serif';
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 600;
+  margin-left: 20px;
+}
+@media (min-width: 768px) {
+  .name {
+    font-size: 25px;
+    margin-left: 20px;
+  }
+}
+
+.image {
+  width: 80px;
+  height: 100px;
+}
